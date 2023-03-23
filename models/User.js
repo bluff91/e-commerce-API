@@ -39,11 +39,11 @@ userSchema.pre('save', async function() {
 })
 
 userSchema.methods.generateToken = function() {
-    return jwt.sign({name:this.name, email:this.email, role:this.role}, process.env.SECRET, {expiresIn:process.env.JWT_TOKE_VALIDITY})
+    return jwt.sign({name:this.name,  role:this.role, userId:this._id}, process.env.JWT_SECRET, {expiresIn:process.env.JWT_TOKE_VALIDITY})
 }
 
 userSchema.methods.checkToken = function(token) {
-    return jwt.verify(token, process.env.SECRET)
+    return jwt.verify(token, process.env.JWT_SECRET)
     
 }
 

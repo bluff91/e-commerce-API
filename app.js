@@ -6,15 +6,21 @@ const mongoose = require('mongoose')
 const ErrorHandlerMiddleware = require('./middleware/error-handler')
 const NotFoundMiddleware = require('./middleware/not-found')
 const morgan = require('morgan')
-const router = require('./routes/router')
+const authRouter = require('./routes/authRouter')
+const userRouter = require('./routes/usersRouter')
+const cookieParser = require('cookie-parser')
 
 app.use(morgan('dev'))
 app.use(express.json())
+app.use(cookieParser(process.env.JWT_SECRET))
 
-app.get('/', (req, res) => {
-    res.json({msg:'home route working'})
+
+app.get('/api/v1', (req, res) => {
+    console.log(req.signedCookies);
+    res.status(200).json("testing route working")
 })
-app.use('/api/v1/auth', router)
+app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/users', userRouter)
 
 app.use(NotFoundMiddleware)
 app.use(ErrorHandlerMiddleware)
