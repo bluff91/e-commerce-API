@@ -16,4 +16,14 @@ const authenticateUser = async (req, res, next) => {
     next()
 }
 
-module.exports = authenticateUser
+const authorizePermission = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            console.log(req.user.role);
+            throw new CustomError.UnauthorizedError("Forbiden access")
+        }
+        next()
+    }
+}
+
+module.exports = {authenticateUser, authorizePermission}

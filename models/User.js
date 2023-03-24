@@ -34,6 +34,8 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre('save', async function() {
+    console.log("I SHOULD NOT BE CALLED");
+    if (!this.isModified('password')) return
     const salt = await bcryptjs.genSalt(10)
     this.password = await bcryptjs.hash(this.password, salt)
 })
