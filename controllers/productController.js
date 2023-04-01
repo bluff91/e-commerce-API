@@ -4,15 +4,25 @@ const CustomError = require('../errors')
 
 
 const getAllProducts = async (req, res) => {
-    res.send('get all products')
+    const products = await Product.find({}).select('-__v -updatedAt').sort('-createdAt')
+    if (!products) {
+        res.status(StatusCodes.OK).send("There are no products to show")
+    }
+    res.status(StatusCodes.OK).json({products, nrHits:products.length})
 }
 
 const createProduct = async (req, res) => {
-    res.send('createProduct')
+    req.body.user = req.user.userId
+    const product = await Product.create(req.body)
+    res.status(StatusCodes.CREATED).json(product)
 }
 
 const getSingleProduct = async (req, res) => {
-    res.send('getSingleProduct')
+    const product = await Product.findOne({_id:req.params.id}).select('-__v -updatedAt')
+    if (!product) {
+        throw new CustomError.NotFound(`item with id ${req.params.id} not found`)
+    }
+    res.status(StatusCodes.OK).json(product)
 }
 
 const updateProduct = async (req, res) => {

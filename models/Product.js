@@ -1,17 +1,18 @@
 const mongoose = require('mongoose')
 
 const ProductSchema = new mongoose.Schema({
-    name:{type:String, },
-    category:{type:String, },
-    price:{type:Number, },
-    description:{type:String, },
-    company:{type:String, },
-    colors:{type:[], of:"String", },
-    featured:{type: Boolean, },
-    freeShipping:{type: Boolean, },
-    inventory:{type:Number, },
-    averageRating:{type:Number, },
-    user:{type: mongoose.Types.ObjectId, ref:"User"}
+    name:{type:String, trim:true, required:[true, "Please provide a name"] },
+    category:{type:String, required:[true, "Please provide product category"], enum:['office', 'kitchen', 'bedroom'] },
+    price:{type:Number, required:[true, "Please provide a price"], default: 0, },
+    description:{type:String, maxlength:[1000, "Description cannot be more than 1000 characters"], required:[true, "Please provide a product description"] },
+    image:{type:String, default:"/uploads/example.jpg"},
+    company:{type:String, required:[true, 'Please provide a company'], enum:{values:['ikea', 'liddy', 'marcos'], message:`{VALUE} is not supported` }},
+    colors:{type:[String], default:['#222'], required:[true, "Please prodvide a color"]},
+    featured:{type: Boolean, default:false },
+    freeShipping:{type: Boolean, default:false},
+    inventory:{type:Number, required:true, default:15},
+    averageRating:{type:Number, default: 0,},
+    user:{type: mongoose.Types.ObjectId, ref:"User", required:true}
 }, {timestamps:true})
 
 module.exports = mongoose.model('Product', ProductSchema)
