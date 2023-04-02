@@ -1,6 +1,8 @@
 const Product = require('../models/Product')
 const {StatusCodes} = require('http-status-codes')
 const CustomError = require('../errors')
+const cloudinary = require('cloudinary').v2
+const fs = require('fs')
 
 
 const getAllProducts = async (req, res) => {
@@ -26,15 +28,22 @@ const getSingleProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
-    res.send('updateProduct')
+    const product = await Product.findOneAndUpdate({_id:req.params.id}, {body:req.body})
+    res.status(StatusCodes.OK).json(product)
 }
 
 const deleteProduct = async (req, res) => {
-    res.send('deleteProduct')
+    const product = await Product.findOneAndRemove({_id:req.params.id})
+    res.status(StatusCodes.OK).json(product)
 }
 
 const uploadImage = async (req, res) => {
-    res.send('addImage')
+    const result = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
+        use_filename:true,
+        folder:'test-files'
+    })
+    fs.unlinkSync(req.files.image.tempFilePath)
+    res.status(StatusCodes.OK).json({src:result.secure_url})
 }
 
 module.exports = {
