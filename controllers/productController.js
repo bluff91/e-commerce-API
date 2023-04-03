@@ -28,12 +28,18 @@ const getSingleProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
-    const product = await Product.findOneAndUpdate({_id:req.params.id}, {body:req.body})
+    const product = await Product.findOneAndUpdate({_id:req.params.id}, req.body, {new:true})
+    if (!product) {
+        throw new CustomError.NotFound(`item with id ${req.params.id} not found`)
+    }
     res.status(StatusCodes.OK).json(product)
 }
 
 const deleteProduct = async (req, res) => {
     const product = await Product.findOneAndRemove({_id:req.params.id})
+    if (!product) {
+        throw new CustomError.NotFound(`item with id ${req.params.id} not found`)
+    }
     res.status(StatusCodes.OK).json(product)
 }
 

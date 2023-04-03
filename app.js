@@ -3,14 +3,18 @@ require('express-async-errors')
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+
+//middleware
 const ErrorHandlerMiddleware = require('./middleware/error-handler')
 const NotFoundMiddleware = require('./middleware/not-found')
 const morgan = require('morgan')
+const cookieParser = require('cookie-parser')
+const fileupload = require('express-fileupload')
+
+//routes
 const authRouter = require('./routes/authRouter')
 const userRouter = require('./routes/usersRouter')
-const cookieParser = require('cookie-parser')
 const productRouter = require('./routes/productRouter')
-const fileupload = require('express-fileupload')
 const reviewRouter = require('./routes/reviewRouter')
 
 app.use(morgan('dev'))

@@ -5,7 +5,7 @@ const ProductSchema = new mongoose.Schema({
     category:{type:String, required:[true, "Please provide product category"], enum:['office', 'kitchen', 'bedroom'] },
     price:{type:Number, required:[true, "Please provide a price"], default: 0, },
     description:{type:String, maxlength:[1000, "Description cannot be more than 1000 characters"], required:[true, "Please provide a product description"] },
-    image:{type:String, default:"/uploads/example.jpg"},
+    image:{type:String, default:"https://res.cloudinary.com/drtzlgrnt/image/upload/v1680537238/test-files/pexels-polina-tankilevitch-4440798_bivwsx.jpg"},
     company:{type:String, required:[true, 'Please provide a company'], enum:{values:['ikea', 'liddy', 'marcos'], message:`{VALUE} is not supported` }},
     colors:{type:[String], default:['#222'], required:[true, "Please prodvide a color"]},
     featured:{type: Boolean, default:false },
