@@ -20,7 +20,7 @@ const createProduct = async (req, res) => {
 }
 
 const getSingleProduct = async (req, res) => {
-    const product = await Product.findOne({_id:req.params.id}).select('-__v -updatedAt')
+    const product = await Product.findOne({_id:req.params.id}).select('-__v -updatedAt').populate('reviews')
     if (!product) {
         throw new CustomError.NotFound(`item with id ${req.params.id} not found`)
     }

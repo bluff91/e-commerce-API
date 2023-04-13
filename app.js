@@ -33,7 +33,7 @@ app.use('/api/v1/products', productRouter)
 app.use('/api/v1/reviews', reviewRouter)
 
 app.use(NotFoundMiddleware)
-app.use(ErrorHandlerMiddleware)
+// app.use(ErrorHandlerMiddleware)
 
 
 

@@ -1,11 +1,19 @@
 const Review = require('../models/Review')
 const Product = require('../models/Product')
+const User = require('../models/User')
 const {StatusCodes} = require('http-status-codes')
 const  CustomAPIError  = require('../errors')
 const { checkPermissions } = require('../utils/utilityFunctions')
 
 const getAllReviews = async (req, res) => {
     const reviews = await Review.find({})
+    .populate({
+        path:'product', 
+        select:'name price'})
+    .populate({
+        path:'user',
+        select:"name"
+    })
     if (reviews.length < 1) {
         res.status(StatusCodes.OK).json("No reviews to show")
     }
@@ -78,7 +86,7 @@ const deleteReview = async (req, res) => {
     }
     checkPermissions(req.user, review.user)
     review.remove()
-    res.status(StatusCodes.OK).json(review)
+    res.status(StatusCodes.OK).json({msg:"Review successfully deleted"})
 }
 
 module.exports = {
