@@ -1,6 +1,6 @@
 const Review = require('../models/Review')
 const Product = require('../models/Product')
-const User = require('../models/User')
+
 const {StatusCodes} = require('http-status-codes')
 const  CustomAPIError  = require('../errors')
 const { checkPermissions } = require('../utils/utilityFunctions')
@@ -89,10 +89,19 @@ const deleteReview = async (req, res) => {
     res.status(StatusCodes.OK).json({msg:"Review successfully deleted"})
 }
 
+const getProductReview = async (req, res) => {
+    const { id:productId } = req.params
+    
+    console.log(productId)
+    const review = await Review.find({product:productId}).select('-updatedAt -__v')
+    res.status(StatusCodes.OK).json(review)
+}
+
 module.exports = {
     getAllReviews,
     createReview,
     getReview,
     updateReview,
     deleteReview,
+    getProductReview
 }

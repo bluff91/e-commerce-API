@@ -7,11 +7,13 @@ const {
     createReview,
     getReview,
     updateReview,
-    deleteReview
+    deleteReview,
+    getProductReview
     } = require ('../controllers/reviewController')
 
 router.route('/').get(getAllReviews).post(authenticateUser, createReview)
 router.route('/:id').get(getReview).patch(authenticateUser, updateReview).delete(authenticateUser, deleteReview)
+router.route('/:id/reviews').get(getProductReview)
 
 module.exports = router
 
