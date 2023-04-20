@@ -1,10 +1,10 @@
- const { CustomError } = require('../errors')
+const { CustomError } = require('../errors')
 const { StatusCodes } = require('http-status-codes')
 const errorHandlerMiddleware = (err, req, res, next) => {
   let customError = {
     //status codes
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
-    msg: err.message || "Something went wrong try again later"
+    msg: err.message || 'Something went wrong try again later',
   }
 
   if (err instanceof CustomError) {
@@ -23,12 +23,12 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 
   if (err.name === 'ValidationError') {
     customError.statusCode = 400
-    customError.msg = Object.values(err.errors).map(item => item.message).join(' ,')
-   
+    customError.msg = Object.values(err.errors)
+      .map((item) => item.message)
+      .join(' ,')
   }
 
-  //return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err })
-  return res.status(customError.statusCode).json({msg: customError.msg})
+  return res.status(customError.statusCode).json({ msg: customError.msg })
 }
 
 module.exports = errorHandlerMiddleware
