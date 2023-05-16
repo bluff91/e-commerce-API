@@ -53,6 +53,7 @@ ReviewSchema.statics.calculateAverageRating = async function (productId) {
         averageRating: Math.ceil(result[0]?.averageRating) || 0,
         numberOfReviews: result[0]?.numberOfReviews || 0,
       },
+      // {new: true} bellow is there just for practice
       { new: true }
     )
   } catch (error) {
