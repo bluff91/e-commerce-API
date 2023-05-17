@@ -19,16 +19,14 @@ const registerUser = async (req, res) => {
   //     signed: true,
   // })
   attachCookiesToResponse(createdToken, res)
-  res
-    .status(StatusCodes.CREATED)
-    .json({
-      name: user.name,
-      email: user.email,
-      userId: user._id,
-      role: user.role,
-      pass: user.password,
-      createdToken,
-    })
+  res.status(StatusCodes.CREATED).json({
+    name: user.name,
+    email: user.email,
+    userId: user._id,
+    role: user.role,
+    pass: user.password,
+    createdToken,
+  })
 }
 
 const loginUser = async (req, res) => {
@@ -51,9 +49,7 @@ const loginUser = async (req, res) => {
   }
   const createdToken = user.generateToken()
   attachCookiesToResponse(createdToken, res)
-  res
-    .status(StatusCodes.OK)
-    .json({ email, password: user.password, role: user.role, createdToken })
+  res.status(StatusCodes.OK).json({ email, role: user.role, createdToken })
 }
 
 const logoutUser = async (req, res) => {

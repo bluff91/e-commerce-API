@@ -35,13 +35,17 @@ const getSingleProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
-  const product = await Product.findOne({ _id: req.params.id }, req.body, {
-    new: true,
-  })
+  const dataToUpdate = req.body
+  const dataKeys = Object.keys(req.body)
+
+  const product = await Product.findOne({ _id: req.params.id })
   if (!product) {
     throw new CustomError.NotFound(`item with id ${req.params.id} not found`)
   }
-  product.save()
+  for (const item of dataKeys) {
+    product[item] = dataToUpdate[item]
+  }
+  await product.save()
   res.status(StatusCodes.OK).json(product)
 }
 

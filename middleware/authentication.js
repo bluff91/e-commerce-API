@@ -22,7 +22,7 @@ const authenticateUser = async (req, res, next) => {
 const authorizePermission = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      throw new CustomError.UnauthorizedError('Forbiden access')
+      throw new CustomError.UnauthorizedError('Forbidden access')
     }
     next()
   }
