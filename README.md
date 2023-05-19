@@ -1,4 +1,4 @@
-#### **e-commerce API Project** [Live](https://e-commerce-api-ymj3.onrender.com)
+### **e-commerce API Project** ----> [Live](https://e-commerce-api-ymj3.onrender.com)
 
 ##### _built with NodeJS, Express and MongoDB_
 
@@ -13,4 +13,4 @@
 
 ---
 
-![picture](https://imgur.com/fz8ZHLB.png)
+![picture](https://imgur.com/IraQu04.png)
