@@ -38,7 +38,6 @@ app.use(cors())
 app.use(xss())
 app.use(mongoSanitize())
 
-app.use(morgan('dev'))
 app.use(express.json())
 app.use(cookieParser(process.env.JWT_SECRET))
 app.use(
@@ -50,7 +49,7 @@ app.use('/api/v1/users', userRouter)
 app.use('/api/v1/products', productRouter)
 app.use('/api/v1/reviews', reviewRouter)
 app.use('/api/v1/orders', orderRouter)
-app.use(express.static('./public'))
+app.use(express.static('./public/docs'))
 
 app.use(NotFoundMiddleware)
 app.use(ErrorHandlerMiddleware)
